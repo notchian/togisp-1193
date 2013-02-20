@@ -1304,6 +1304,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.e {
         if (!(entity instanceof EntityComplexPart)) {
             EntityTypes<?> entitytypes = entity.getType();
             int i = entitytypes.clientTrackingRange() * 16;
+            i = org.spigotmc.TrackingRange.getEntityTrackingRange(entity, i); // Spigot
 
             if (i != 0) {
                 int j = entitytypes.updateInterval();
