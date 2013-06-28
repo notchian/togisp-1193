@@ -2335,6 +2335,13 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
         if (this.player.isImmobile()) return; // CraftBukkit
         final WorldServer worldserver = this.player.getLevel();
         final Entity entity = packetplayinuseentity.getTarget(worldserver);
+        // Spigot Start
+        if ( entity == player && !player.isSpectator() )
+        {
+            disconnect( "Cannot interact with self!" );
+            return;
+        }
+        // Spigot End
 
         this.player.resetLastActionTime();
         this.player.setShiftKeyDown(packetplayinuseentity.isUsingSecondaryAction());
