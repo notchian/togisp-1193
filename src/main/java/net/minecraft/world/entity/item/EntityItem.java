@@ -178,7 +178,7 @@ public class EntityItem extends Entity {
                 }
             }
 
-            if (!this.level.isClientSide && this.age >= 6000) {
+            if (!this.level.isClientSide && this.age >= level.spigotConfig.itemDespawnRate) { // Spigot
                 // CraftBukkit start - fire ItemDespawnEvent
                 if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                     this.age = 0;
@@ -510,7 +510,7 @@ public class EntityItem extends Entity {
 
     public void makeFakeItem() {
         this.setNeverPickUp();
-        this.age = 5999;
+        this.age = level.spigotConfig.itemDespawnRate - 1; // Spigot
     }
 
     public float getSpin(float f) {
