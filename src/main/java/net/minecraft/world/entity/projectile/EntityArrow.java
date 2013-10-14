@@ -314,7 +314,7 @@ public abstract class EntityArrow extends IProjectile {
 
     protected void tickDespawn() {
         ++this.life;
-        if (this.life >= 1200) {
+        if (this.life >= ((this instanceof EntityThrownTrident) ? level.spigotConfig.tridentDespawnRate : level.spigotConfig.arrowDespawnRate)) { // Spigot
             this.discard();
         }
 
