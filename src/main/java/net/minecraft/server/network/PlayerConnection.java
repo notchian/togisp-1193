@@ -1896,7 +1896,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
             if (optional.isPresent()) {
                 this.server.submit(() -> {
                     this.performChatCommand(serverboundchatcommandpacket, (LastSeenMessages) optional.get());
-                    this.detectRateSpam();
+                    this.detectRateSpam("/" + serverboundchatcommandpacket.command()); // Spigot
                 });
             }
 
@@ -2167,11 +2167,22 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
         }
         // this.server.getPlayerList().broadcastChatMessage(playerchatmessage, this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) this.player));
         // CraftBukkit end
-        this.detectRateSpam();
+        this.detectRateSpam(s); // Spigot
     }
 
-    private void detectRateSpam() {
+    // Spigot start - spam exclusions
+    private void detectRateSpam(String s) {
         // CraftBukkit start - replaced with thread safe throttle
+        boolean counted = true;
+        for ( String exclude : org.spigotmc.SpigotConfig.spamExclusions )
+        {
+            if ( exclude != null && s.startsWith( exclude ) )
+            {
+                counted = false;
+                break;
+            }
+        }
+        // Spigot end
         // this.chatSpamTickCount += 20;
         if (this.chatSpamTickCount.addAndGet(20) > 200 && !this.server.getPlayerList().isOp(this.player.getGameProfile())) {
             // CraftBukkit end
