@@ -276,6 +276,7 @@ public class EntityWither extends EntityMonster implements PowerableMob, IRanged
                         double deltaX = this.getX() - player.getX();
                         double deltaZ = this.getZ() - player.getZ();
                         double distanceSquared = deltaX * deltaX + deltaZ * deltaZ;
+                        if ( level.spigotConfig.witherSpawnSoundRadius > 0 && distanceSquared > level.spigotConfig.witherSpawnSoundRadius * level.spigotConfig.witherSpawnSoundRadius ) continue; // Spigot
                         if (distanceSquared > viewDistance * viewDistance) {
                             double deltaLength = Math.sqrt(distanceSquared);
                             double relativeX = player.getX() + (deltaX / deltaLength) * viewDistance;
