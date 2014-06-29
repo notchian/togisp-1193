@@ -1594,10 +1594,30 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
         }
     }
 
+    // Spigot start - limit place/interactions
+    private int limitedPackets;
+    private long lastLimitedPacket = -1;
+
+    private boolean checkLimit(long timestamp) {
+        if (lastLimitedPacket != -1 && timestamp - lastLimitedPacket < 30 && limitedPackets++ >= 4) {
+            return false;
+        }
+
+        if (lastLimitedPacket == -1 || timestamp - lastLimitedPacket >= 30) {
+            lastLimitedPacket = timestamp;
+            limitedPackets = 0;
+            return true;
+        }
+
+        return true;
+    }
+    // Spigot end
+
     @Override
     public void handleUseItemOn(PacketPlayInUseItem packetplayinuseitem) {
         PlayerConnectionUtils.ensureRunningOnSameThread(packetplayinuseitem, this, this.player.getLevel());
         if (this.player.isImmobile()) return; // CraftBukkit
+        if (!checkLimit(packetplayinuseitem.timestamp)) return; // Spigot - check limit
         this.player.connection.ackBlockChangesUpTo(packetplayinuseitem.getSequence());
         WorldServer worldserver = this.player.getLevel();
         EnumHand enumhand = packetplayinuseitem.getHand();
@@ -1651,6 +1671,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
     public void handleUseItem(PacketPlayInBlockPlace packetplayinblockplace) {
         PlayerConnectionUtils.ensureRunningOnSameThread(packetplayinblockplace, this, this.player.getLevel());
         if (this.player.isImmobile()) return; // CraftBukkit
+        if (!checkLimit(packetplayinblockplace.timestamp)) return; // Spigot - check limit
         this.ackBlockChangesUpTo(packetplayinblockplace.getSequence());
         WorldServer worldserver = this.player.getLevel();
         EnumHand enumhand = packetplayinblockplace.getHand();
