@@ -616,7 +616,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
                 d10 = d6 * d6 + d7 * d7 + d8 * d8;
                 boolean flag2 = false;
 
-                if (d10 > 0.0625D) {
+                if (d10 > org.spigotmc.SpigotConfig.movedWronglyThreshold) { // Spigot
                     flag2 = true;
                     PlayerConnection.LOGGER.warn("{} (vehicle of {}) moved wrongly! {}", new Object[]{entity.getName().getString(), this.player.getName().getString(), Math.sqrt(d10)});
                 }
@@ -1297,7 +1297,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
                             d11 = d7 * d7 + d8 * d8 + d9 * d9;
                             boolean flag2 = false;
 
-                            if (!this.player.isChangingDimension() && d11 > 0.0625D && !this.player.isSleeping() && !this.player.gameMode.isCreative() && this.player.gameMode.getGameModeForPlayer() != EnumGamemode.SPECTATOR) {
+                            if (!this.player.isChangingDimension() && d11 > org.spigotmc.SpigotConfig.movedWronglyThreshold && !this.player.isSleeping() && !this.player.gameMode.isCreative() && this.player.gameMode.getGameModeForPlayer() != EnumGamemode.SPECTATOR) { // Spigot
                                 flag2 = true;
                                 PlayerConnection.LOGGER.warn("{} moved wrongly!", this.player.getName().getString());
                             }
