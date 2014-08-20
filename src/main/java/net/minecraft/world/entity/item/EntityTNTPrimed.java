@@ -60,6 +60,7 @@ public class EntityTNTPrimed extends Entity {
 
     @Override
     public void tick() {
+        if (level.spigotConfig.maxTntTicksPerTick > 0 && ++level.spigotConfig.currentPrimedTnt > level.spigotConfig.maxTntTicksPerTick) { return; } // Spigot
         if (!this.isNoGravity()) {
             this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D, 0.0D));
         }
