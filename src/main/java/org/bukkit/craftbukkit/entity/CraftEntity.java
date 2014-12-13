@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.minecraft.core.BlockPosition;
 import net.minecraft.core.Position;
 import net.minecraft.nbt.NBTBase;
@@ -1146,6 +1147,26 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     // Spigot start
     private final org.bukkit.entity.Entity.Spigot spigot = new org.bukkit.entity.Entity.Spigot()
     {
+
+        @Override
+        public void sendMessage(net.md_5.bungee.api.chat.BaseComponent component)
+        {
+        }
+
+        @Override
+        public void sendMessage(net.md_5.bungee.api.chat.BaseComponent... components)
+        {
+        }
+
+        @Override
+        public void sendMessage(UUID sender, BaseComponent... components)
+        {
+        }
+
+        @Override
+        public void sendMessage(UUID sender, BaseComponent component)
+        {
+        }
     };
 
     public org.bukkit.entity.Entity.Spigot spigot()
