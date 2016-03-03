@@ -158,6 +158,18 @@ public abstract class MobSpawnerAbstract {
                             }
                             // Spigot End
                         }
+                        // Spigot Start
+                        if (org.bukkit.craftbukkit.event.CraftEventFactory.callSpawnerSpawnEvent(entity, blockposition).isCancelled()) {
+                            Entity vehicle = entity.getVehicle();
+                            if (vehicle != null) {
+                                vehicle.discard();
+                            }
+                            for (Entity passenger : entity.getIndirectPassengers()) {
+                                passenger.discard();
+                            }
+                            continue;
+                        }
+                        // Spigot End
 
                         if (!worldserver.tryAddFreshEntityWithPassengers(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER)) { // CraftBukkit
                             this.delay(worldserver, blockposition);
