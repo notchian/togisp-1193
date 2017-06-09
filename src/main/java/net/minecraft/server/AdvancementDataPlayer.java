@@ -212,6 +212,7 @@ public class AdvancementDataPlayer {
     }
 
     public void save() {
+        if (org.spigotmc.SpigotConfig.disableAdvancementSaving) return; // Spigot
         Map<MinecraftKey, AdvancementProgress> map = Maps.newHashMap();
         Iterator iterator = this.advancements.entrySet().iterator();
 
