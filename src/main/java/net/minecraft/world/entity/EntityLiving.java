@@ -1614,7 +1614,7 @@ public abstract class EntityLiving extends Entity {
             }
 
             if (!this.level.isClientSide && this.hasCustomName()) {
-                EntityLiving.LOGGER.info("Named entity {} died: {}", this, this.getCombatTracker().getDeathMessage().getString());
+                if (org.spigotmc.SpigotConfig.logNamedDeaths) EntityLiving.LOGGER.info("Named entity {} died: {}", this, this.getCombatTracker().getDeathMessage().getString()); // Spigot
             }
 
             this.dead = true;
